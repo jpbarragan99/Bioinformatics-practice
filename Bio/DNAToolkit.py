@@ -60,3 +60,34 @@ def gen_reading_frames(seq):
   frames.append(translate_seq(reverse_complement(seq), 1))
   frames.append(translate_seq(reverse_complement(seq), 2))
   return frames
+
+def proteins_from_rf(aa_seq):
+  current_prot = []
+  proteins = []
+  for aa in aa_seq:
+    if aa == "_":
+      if current_prot:
+        for p in current_prot:
+          proteins.append(p)
+        current_prot = []
+    else:
+      if aa == "M":
+        current_prot.append("")
+      for i in range(len(current_prot)):
+        current_prot[i] += aa
+  return proteins
+
+def all_proteins_from_orfs(seq, startReadPos = 0, endReadPos = 0, ordered = False):
+  if endReadPos > startReadPos:
+    rfs = gen_reading_frames(seq[startReadPos: endReadPos])
+  else:
+    rfs = gen_reading_frames(seq)
+  
+  res = []
+  for rf in rfs:
+    prots = proteins_from_rf(rf)
+    for p in prots:
+      res.append(p)
+    if ordered:
+      return sorted(res, key = len, reverse = True)
+    return res
