@@ -1,4 +1,7 @@
-Nucleotides = ["A", "C", "G", "T"]
+Nucleotides_Base ={ 
+    "DNA" : ["A", "C", "G", "T"],
+    "RNA" : ["A", "U", "C", "G"],
+    }
 
 DNA_ReverseComplement = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
 
